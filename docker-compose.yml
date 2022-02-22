@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  postgres:
+    image: "postgres:12"
+    restart: always
+    volumes:
+      - ./.data/postgres:/var/lib/postgresql/data
+      - ./migration:/migration
+    env_file:
+      - .env
+    expose: ["5432"]
+    ports: ["5432:5432"]
+
+  api:
+    image: "node:14.15.4"
+    depends_on: ["postgres"]
+    working_dir: /app/api
+    command: bash -c "yarn && yarn run start"
+    volumes:
+      - ./api:/app/api
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    env_file:
+      - .env
+    ports: ["8080:8080"]
+
+  web:
+    image: "node:14.15.4"
+    depends_on: ["api"]
+    working_dir: /app/web
+    command: bash -c "yarn && yarn run start"
+    volumes:
+      - "./web:/app/web"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    expose: ["3000"]
+    ports: ["3000:3000"]
