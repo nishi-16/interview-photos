@@ -103,7 +103,7 @@ const PhotosList = ({ city, title } : FilterCriteriaPropType) => {
                 headers: myHeaders,
                 body: raw,
             };
-            fetch("http://localhost:8080/filter", reqOptions)
+            fetch("http://nishipatel.ca:8080/filter", reqOptions)
                 .then(response => response.json())
                 .then((result) => {
                     setPhotoData(result)

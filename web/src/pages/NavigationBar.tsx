@@ -21,7 +21,7 @@ const NavigationBar = () => {
 
     const getAllCollections = async () => {
         try{
-            const response = await fetch("http://localhost:8080/collections");
+            const response = await fetch("http://nishipatel.ca:8080/collections");
             const jsonData = await response.json()
             setCollectionData(jsonData)
         }catch(err){
